@@ -41,8 +41,11 @@ const Container = styled.div`
   gap: 1rem;
   padding: 0 1rem;
 
-  .Active {
-    display: none;
+ 
+  .checked {
+    text-decoration: line-through;
+    ${console.log('hello')}
+
   }
   
 `
@@ -53,21 +56,9 @@ const TodoItem = styled.div`
   gap: 1rem;
   align-items: center;
   margin: 2rem 0;
-`
-const Tick = styled.div`
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  border: 1px solid black;
   cursor: pointer;
-
-
-  .active {
-    background-image: url(${check});
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
 `
+
 
 function Todo() {
 
@@ -77,6 +68,11 @@ function Todo() {
   }
 
   const [ items, setItems ] = useState(getTodo())
+
+  const checked = (e) => {
+    e.target.classList.toggle('checked');
+    console.log(document.querySelectorAll('.checked'))
+}
 
 
 
@@ -103,7 +99,10 @@ function Todo() {
       type='text' />
       <div>
         {items.map((item, index) => 
-            <Container key={index}>
+            <Container 
+                onClick={checked}
+
+                key={index}>
 
                 <TodoItem>
             {index + 1} .{item}</TodoItem>
@@ -114,11 +113,6 @@ function Todo() {
                     setItems(list)
                 }}
                 src={deleteIcon} />
-                <div>
-                    <Tick 
-                        
-                    />
-                </div>
             </Container>
             
        )}
@@ -126,6 +120,7 @@ function Todo() {
     </div>
   );
 }
+
 export default Todo;
 
 
